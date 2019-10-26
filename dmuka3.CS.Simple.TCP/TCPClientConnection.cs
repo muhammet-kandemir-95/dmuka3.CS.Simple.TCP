@@ -130,7 +130,10 @@ namespace dmuka3.CS.Simple.TCP
                 int bytesRead;
                 while (true)
                 {
-                    if (!this._checkConnectionAndDisposedForOriginalClient || !this._networkStream.DataAvailable)
+                    if (!this._checkConnectionAndDisposedForOriginalClient)
+                        throw new Exception("CONNECTION_FAILED = Connection disconnected!");
+
+                    if (!this._networkStream.DataAvailable)
                     {
                         Thread.Sleep(1);
                         continue;
