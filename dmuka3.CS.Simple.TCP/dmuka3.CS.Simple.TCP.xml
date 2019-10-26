@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>dmuka3.CS.Simple.TCP</name>
+    </assembly>
+    <members>
+        <member name="T:dmuka3.CS.Simple.TCP.TCPClientConnection">
+            <summary>
+            By the dmuka protocol, read datas on network.
+            </summary>
+        </member>
+        <member name="P:dmuka3.CS.Simple.TCP.TCPClientConnection._tcp">
+            <summary>
+            Connection.
+            </summary>
+        </member>
+        <member name="F:dmuka3.CS.Simple.TCP.TCPClientConnection._startedSsl">
+            <summary>
+            Are we using ssl?
+            </summary>
+        </member>
+        <member name="P:dmuka3.CS.Simple.TCP.TCPClientConnection._stream">
+            <summary>
+            Stream to read datas.
+            </summary>
+        </member>
+        <member name="P:dmuka3.CS.Simple.TCP.TCPClientConnection._networkStream">
+            <summary>
+            Original network stream.
+            </summary>
+        </member>
+        <member name="P:dmuka3.CS.Simple.TCP.TCPClientConnection._sslStream">
+            <summary>
+            SSL stream via network stream.
+            </summary>
+        </member>
+        <member name="F:dmuka3.CS.Simple.TCP.TCPClientConnection._disposed">
+            <summary>
+            Checking dispose.
+            </summary>
+        </member>
+        <member name="P:dmuka3.CS.Simple.TCP.TCPClientConnection._checkConnectionAndDisposedForOriginalClient">
+            <summary>
+            Is connection state avaiable?
+            </summary>
+        </member>
+        <member name="M:dmuka3.CS.Simple.TCP.TCPClientConnection.#ctor(System.Net.Sockets.TcpClient)">
+            <summary>
+            Create an instance via TcpClient.
+            </summary>
+            <param name="client">Connection.</param>
+        </member>
+        <member name="M:dmuka3.CS.Simple.TCP.TCPClientConnection.Send(System.Byte[])">
+            <summary>
+            Send data using dmuka protocol.
+            </summary>
+            <param name="buffer">What is the send?</param>
+        </member>
+        <member name="M:dmuka3.CS.Simple.TCP.TCPClientConnection.Receive(System.Int32,System.Int32)">
+            <summary>
+            Receive data using dmuka protocol.
+            </summary>
+            <param name="maxPackageSize">Max data length.</param>
+            <param name="timeOutSecond">Time out second.</param>
+        </member>
+        <member name="M:dmuka3.CS.Simple.TCP.TCPClientConnection.StartSSL(System.String)">
+            <summary>
+            Start SLL connection.
+            </summary>
+            <param name="targetHost">SSL target host.</param>
+        </member>
+        <member name="M:dmuka3.CS.Simple.TCP.TCPClientConnection.Dispose">
+            <summary>
+            Dispose current connection.
+            </summary>
+        </member>
+    </members>
+</doc>

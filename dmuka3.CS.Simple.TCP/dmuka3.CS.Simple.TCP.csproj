@@ -1,14 +1,19 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Description>TCP library.</Description>
     <Copyright>https://github.com/muhammet-kandemir-95</Copyright>
     <PackageProjectUrl>https://github.com/muhammet-kandemir-95/dmuka3.CS.Simple.TCP</PackageProjectUrl>
     <RepositoryUrl>https://github.com/muhammet-kandemir-95/dmuka3.CS.Simple.TCP</RepositoryUrl>
     <PackageTags>c#, core, simple, tcp</PackageTags>
-    <Version>1.0.1</Version>
+    <Version>1.0.2</Version>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>C:\Users\k8a1n\mpf\projects\github\dmuka3.CS.Simple.TCP\dmuka3.CS.Simple.TCP\dmuka3.CS.Simple.TCP.xml</DocumentationFile>
   </PropertyGroup>
 
 </Project>
