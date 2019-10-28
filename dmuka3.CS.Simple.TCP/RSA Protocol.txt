@@ -1,0 +1,2 @@
+﻿CLIENT : public_key
+SERVER : public_key

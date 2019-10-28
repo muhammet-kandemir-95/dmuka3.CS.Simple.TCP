@@ -39,6 +39,21 @@
             Checking dispose.
             </summary>
         </member>
+        <member name="F:dmuka3.CS.Simple.TCP.TCPClientConnection._rsaRemote">
+            <summary>
+            RSA for remote side.
+            </summary>
+        </member>
+        <member name="F:dmuka3.CS.Simple.TCP.TCPClientConnection._rsaLocal">
+            <summary>
+            RSA for local side.
+            </summary>
+        </member>
+        <member name="F:dmuka3.CS.Simple.TCP.TCPClientConnection._dmuka3RSAEnable">
+            <summary>
+            Has dmuka RSA been activated?
+            </summary>
+        </member>
         <member name="P:dmuka3.CS.Simple.TCP.TCPClientConnection._checkConnectionAndDisposedForOriginalClient">
             <summary>
             Is connection state avaiable?
@@ -62,6 +77,12 @@
             </summary>
             <param name="maxPackageSize">Max data length.</param>
             <param name="timeOutSecond">Time out second.</param>
+        </member>
+        <member name="M:dmuka3.CS.Simple.TCP.TCPClientConnection.StartDMUKA3RSA(System.Int32)">
+            <summary>
+            Start secure communication with dmuka3.RSA
+            </summary>
+            <param name="dwKeySize">Key size of RSA.</param>
         </member>
         <member name="M:dmuka3.CS.Simple.TCP.TCPClientConnection.StartSSL(System.String)">
             <summary>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using dmuka3.CS.Simple.RSA;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Security;
@@ -54,6 +55,21 @@ namespace dmuka3.CS.Simple.TCP
         private bool _disposed = false;
 
         /// <summary>
+        /// RSA for remote side.
+        /// </summary>
+        private RSAKey _rsaRemote = null;
+
+        /// <summary>
+        /// RSA for local side.
+        /// </summary>
+        private RSAKey _rsaLocal = null;
+
+        /// <summary>
+        /// Has dmuka RSA been activated?
+        /// </summary>
+        private bool _dmuka3RSAEnable = false;
+
+        /// <summary>
         /// Is connection state avaiable?
         /// </summary>
         private bool _checkConnectionAndDisposedForOriginalClient
@@ -99,8 +115,9 @@ namespace dmuka3.CS.Simple.TCP
         /// <param name="buffer">What is the send?</param>
         public void Send(byte[] buffer)
         {
-            if (buffer.Length == 0)
-                return;
+            if (this._dmuka3RSAEnable)
+                buffer = this._rsaRemote.Encrypt(buffer);
+
             lock (this._tcp)
             {
                 byte[] package = new byte[buffer.Length + 4];
@@ -183,7 +200,32 @@ namespace dmuka3.CS.Simple.TCP
 
             var cacheAsArray = cache.ToArray();
             cache.Clear();
+
+            if (this._dmuka3RSAEnable)
+                cacheAsArray = this._rsaLocal.Decrypt(cacheAsArray);
+
             return cacheAsArray;
+        }
+
+        /// <summary>
+        /// Start secure communication with dmuka3.RSA
+        /// </summary>
+        /// <param name="dwKeySize">Key size of RSA.</param>
+        public void StartDMUKA3RSA(int dwKeySize)
+        {
+            lock (this._tcp)
+            {
+                this._rsaLocal = new RSAKey(dwKeySize);
+                this.Send(
+                    Encoding.UTF8.GetBytes(
+                        this._rsaLocal.PublicKey
+                        ));
+                this._rsaRemote = new RSAKey(
+                                        Encoding.UTF8.GetString(
+                                            this.Receive()
+                                            ));
+                this._dmuka3RSAEnable = true;
+            }
         }
 
         /// <summary>

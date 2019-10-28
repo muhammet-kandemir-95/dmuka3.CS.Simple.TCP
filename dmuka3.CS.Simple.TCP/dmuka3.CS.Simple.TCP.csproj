@@ -9,11 +9,15 @@
     <PackageProjectUrl>https://github.com/muhammet-kandemir-95/dmuka3.CS.Simple.TCP</PackageProjectUrl>
     <RepositoryUrl>https://github.com/muhammet-kandemir-95/dmuka3.CS.Simple.TCP</RepositoryUrl>
     <PackageTags>c#, core, simple, tcp</PackageTags>
-    <Version>1.0.2</Version>
+    <Version>1.0.3</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <DocumentationFile>C:\Users\k8a1n\mpf\projects\github\dmuka3.CS.Simple.TCP\dmuka3.CS.Simple.TCP\dmuka3.CS.Simple.TCP.xml</DocumentationFile>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="dmuka3.CS.Simple.RSA" Version="1.0.1" />
+  </ItemGroup>
 
 </Project>
