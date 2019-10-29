@@ -223,6 +223,9 @@ namespace dmuka3.CS.Simple.TCP
 
                             buffer = new byte[Math.Min(1024, packageSize - cache.Count)];
                             readPackageSize = true;
+
+                            if (cache.Count == packageSize)
+                                break;
                         }
                     }
                     else

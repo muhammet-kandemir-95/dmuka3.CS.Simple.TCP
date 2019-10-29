@@ -9,7 +9,7 @@
     <PackageProjectUrl>https://github.com/muhammet-kandemir-95/dmuka3.CS.Simple.TCP</PackageProjectUrl>
     <RepositoryUrl>https://github.com/muhammet-kandemir-95/dmuka3.CS.Simple.TCP</RepositoryUrl>
     <PackageTags>c#, core, simple, tcp</PackageTags>
-    <Version>1.0.4</Version>
+    <Version>1.0.5</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
