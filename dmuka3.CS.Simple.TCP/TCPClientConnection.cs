@@ -110,6 +110,40 @@ namespace dmuka3.CS.Simple.TCP
 
         #region Methods
         /// <summary>
+        /// Convert int value to as minimum byte[] as possible.
+        /// </summary>
+        /// <param name="len">Package len.</param>
+        private byte[] lenToByteArray(int len)
+        {
+            if (len < byte.MaxValue - 1)
+                return new byte[] { (byte)len };
+            else if (len < ushort.MaxValue)
+            {
+                var r = BitConverter.GetBytes((ushort)len);
+                return new byte[] { 254, r[0], r[1] };
+            }
+            else
+            {
+                var r = BitConverter.GetBytes(len);
+                return new byte[] { 255, r[0], r[1], r[2], r[3] };
+            }
+        }
+
+        /// <summary>
+        /// Convert byte[] to package length.
+        /// </summary>
+        /// <param name="len">Package length.</param>
+        private (int len, int lenPackageSize) byteArrayToLen(byte[] len)
+        {
+            if (len[0] == 255)
+                return (len: BitConverter.ToInt32(len, 1), lenPackageSize: 5);
+            else if (len[0] == 254)
+                return (len: BitConverter.ToUInt16(len, 1), lenPackageSize: 3);
+            else
+                return (len: len[0], lenPackageSize: 1);
+        }
+
+        /// <summary>
         /// Send data using dmuka protocol.
         /// </summary>
         /// <param name="buffer">What is the send?</param>
@@ -120,9 +154,10 @@ namespace dmuka3.CS.Simple.TCP
 
             lock (this._tcp)
             {
-                byte[] package = new byte[buffer.Length + 4];
-                Array.Copy(BitConverter.GetBytes(buffer.Length), 0, package, 0, 4);
-                Array.Copy(buffer, 0, package, 4, buffer.Length);
+                var len = this.lenToByteArray(buffer.Length);
+                byte[] package = new byte[buffer.Length + len.Length];
+                Array.Copy(len, 0, package, 0, len.Length);
+                Array.Copy(buffer, 0, package, len.Length, buffer.Length);
 
                 this._stream.Write(package, 0, package.Length);
             }
@@ -143,7 +178,7 @@ namespace dmuka3.CS.Simple.TCP
 
             lock (this._tcp)
             {
-                byte[] buffer = new byte[4];
+                byte[] buffer = new byte[9];
                 int bytesRead;
                 while (true)
                 {
@@ -169,13 +204,16 @@ namespace dmuka3.CS.Simple.TCP
                     if (readPackageSize == false)
                     {
                         cache.AddRange(actualBuffer);
-                        if (cache.Count >= 4)
+                        if (
+                            (cache.Count >= 1 && cache[0] < 254) ||
+                            (cache.Count >= 3 && cache[0] == 254) ||
+                            (cache.Count >= 5 && cache[0] == 255)
+                        )
                         {
-                            packageSize = BitConverter.ToInt32(new byte[] { cache[0], cache[1], cache[2], cache[3] }, 0);
-                            cache.RemoveAt(0);
-                            cache.RemoveAt(0);
-                            cache.RemoveAt(0);
-                            cache.RemoveAt(0);
+                            var len = this.byteArrayToLen(cache.ToArray());
+                            packageSize = len.len;
+                            for (int i = 0; i < len.lenPackageSize; i++)
+                                cache.RemoveAt(0);
 
                             if (maxPackageSize != -1 && maxPackageSize < packageSize)
                                 throw maxSizeErr;

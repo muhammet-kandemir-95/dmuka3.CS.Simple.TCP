@@ -65,6 +65,18 @@
             </summary>
             <param name="client">Connection.</param>
         </member>
+        <member name="M:dmuka3.CS.Simple.TCP.TCPClientConnection.lenToByteArray(System.Int32)">
+            <summary>
+            Convert int value to as minimum byte[] as possible.
+            </summary>
+            <param name="len">Package len.</param>
+        </member>
+        <member name="M:dmuka3.CS.Simple.TCP.TCPClientConnection.byteArrayToLen(System.Byte[])">
+            <summary>
+            Convert byte[] to package length.
+            </summary>
+            <param name="len">Package length.</param>
+        </member>
         <member name="M:dmuka3.CS.Simple.TCP.TCPClientConnection.Send(System.Byte[])">
             <summary>
             Send data using dmuka protocol.

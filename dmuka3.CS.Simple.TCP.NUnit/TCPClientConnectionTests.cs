@@ -49,6 +49,46 @@ namespace dmuka3.CS.Simple.TCP.NUnit
         }
 
         [Test]
+        public void ServerClientBigDatasTest()
+        {
+            TcpListener server = new TcpListener(IPAddress.Any, 9875);
+            server.Start();
+
+            bool stopped = false;
+            bool test = false;
+
+            new Thread(() =>
+            {
+                var client = server.AcceptTcpClient();
+                var conn = new TCPClientConnection(client);
+
+                if (
+                    conn.Receive().LongLength == byte.MaxValue / 2 &&
+                    conn.Receive().LongLength == byte.MaxValue + 1 &&
+                    conn.Receive().LongLength == ushort.MaxValue + 1
+                )
+                    test = true;
+                stopped = true;
+            }).Start();
+            new Thread(() =>
+            {
+                var client = new TcpClient();
+                client.Connect("127.0.0.1", 9875);
+                var conn = new TCPClientConnection(client);
+                conn.Send(new byte[byte.MaxValue / 2]);
+                conn.Send(new byte[byte.MaxValue + 1]);
+                conn.Send(new byte[ushort.MaxValue + 1]);
+            }).Start();
+
+            while (!stopped)
+                Thread.Sleep(1);
+
+            server.Stop();
+
+            Assert.IsTrue(test);
+        }
+
+        [Test]
         public void ServerClientRSATest()
         {
             TcpListener server = new TcpListener(IPAddress.Any, 9875);
@@ -74,7 +114,7 @@ namespace dmuka3.CS.Simple.TCP.NUnit
             {
                 var client = new TcpClient();
                 client.Connect("127.0.0.1", 9875);
-                
+
                 var conn = new TCPClientConnection(client);
                 conn.StartDMUKA3RSA(2048);
 
