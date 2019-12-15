@@ -13,7 +13,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DocumentationFile>C:\Users\k8a1n\mpf\projects\github\dmuka3.CS.Simple.TCP\dmuka3.CS.Simple.TCP\dmuka3.CS.Simple.TCP.xml</DocumentationFile>
+    <DocumentationFile>..\dmuka3.CS.Simple.TCP\dmuka3.CS.Simple.TCP.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
